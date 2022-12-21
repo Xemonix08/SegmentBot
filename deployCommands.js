@@ -12,20 +12,18 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: '10' }).setToken(token);
 
-console.log('╮ Refreshing application commands...');
+console.log('Refreshing application commands...');
 (async () => {
     try {
-        console.log('╰─╮');
-        console.log(`  │ Started refreshing ${commands.length} commands.`);
+        console.log(`Started refreshing ${commands.length} commands.`);
 
         const data = await rest.put(
             Routes.applicationGuildCommands(clientId, guildId),
             { body: commands },
         );
 
-        console.log(`V │ Successfully refreshed ${data.length} commands!`);
+        console.log(`✅ | Successfully refreshed ${data.length} commands!`);
     } catch (e) {
-        console.log(`X │ An error occurred while refreshing application commands! ${e.message}`);
+        console.log(`❌ | An error occurred while refreshing application commands! ${e.message}`);
     }
-    console.log('──╯');
 })();

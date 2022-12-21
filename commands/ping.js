@@ -5,6 +5,7 @@ module.exports = {
         .setName('ping')
         .setDescription('Pong! Returns bot\'s latency.'),
     async execute(interaction) {
+        throw new Error('test error');
         const ping = interaction.client.ws.ping;
         const oldColorRange = 300 - 1;
         const newColorRange = 0xFF00 - 0x00FF;

@@ -1,0 +1,6 @@
+{
+  "token": "Your bot's token",
+  "clientId": "Your bot's ID",
+  "guildId": "ID of the guild you are going to use the bot in",
+  "logsWebhookUrl": "URL of the webhook to log errors (leave empty for none)"
+}

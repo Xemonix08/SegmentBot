@@ -1,6 +1,6 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
-const { loadAllFiles } = require('./getFiles.js');
+const { loadEventFiles, loadCommandFiles } = require('./getFiles.js');
 
 console.log('╮ Starting the bot.');
 
@@ -8,6 +8,7 @@ const client = new Client({
     intents: [GatewayIntentBits.Guilds]
 });
 
-loadAllFiles(client);
+loadEventFiles(client);
+loadCommandFiles(client);
 
 client.login(token);

@@ -3,10 +3,6 @@ const path = require('node:path');
 const { Collection } = require('discord.js');
 
 module.exports = {
-    async loadAllFiles(client) {
-        await this.loadEventFiles(client);
-        await this.loadCommandFiles(client);
-    },
     async loadEventFiles(client) {
         console.log('│ Loading event files...');
         const eventsDir = path.join(__dirname, 'events');

@@ -1,4 +1,4 @@
-const { Events } = require('discord.js');
+const { Events, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     event: Events.InteractionCreate,
@@ -21,6 +21,17 @@ module.exports = {
             console.log('  ╰───────────────────────────────────────');
             console.error(e);
             console.log('╭─────────────────────────────────────────');
+
+            const replyEmbed = new EmbedBuilder()
+                .setTitle('❌ Uh-oh!')
+                .setDescription('Something went wrong! But we\'ve tracked the issue and will get onto it soon.')
+                .setColor(0xFF0000);
+            const reply = { embeds: [replyEmbed], ephemeral: true };
+            try {
+                interaction.reply(reply);
+            } catch (e) {
+                interaction.editReply(reply);
+            }
         }
     }
 };

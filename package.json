@@ -4,7 +4,7 @@
   "version": "0.1.1",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "node .\\deploy.js"
+    "deploy": "node .\\deployCommands.js"
   },
   "keywords": [],
   "author": "",

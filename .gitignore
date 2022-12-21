@@ -3,3 +3,4 @@ config.json
 .eslintrc
 jsconfig.json
 package-lock.json
+database.sqlite

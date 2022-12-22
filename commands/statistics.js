@@ -21,7 +21,7 @@ module.exports = {
         const pd = await rank(interaction.client, user.id);
         const replyEmbed = new EmbedBuilder()
             .setTitle(title)
-            .setDescription(`**ProgressData:** ${formatPdAmount(pd)}`)
+            .setDescription(`**ProgressData:** ${formatPdAmount(pd, true)}`)
             .setColor(Math.floor(Math.random() * 0xFFFFFF))
             .setTimestamp();
         const reply = { embeds: [replyEmbed] };

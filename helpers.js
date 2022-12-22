@@ -14,7 +14,8 @@ function customWrite(data, prefix, webhookSettings) {
                 .setAuthor({ name: webhookSettings.title, iconURL: webhookSettings.iconURL })
                 .setDescription(webhookSettings.description)
                 .addFields(webhookSettings.fields)
-                .setColor(webhookSettings.embedColor);
+                .setColor(webhookSettings.embedColor)
+                .setTimestamp();
             if (webhookSettings.content) {
                 webhookClient.send({ content: webhookSettings.content, embeds: [embed] });
             } else {

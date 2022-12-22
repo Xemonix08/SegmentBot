@@ -22,7 +22,8 @@ module.exports = {
             const replyEmbed = new EmbedBuilder()
                 .setTitle('❌ Uh-oh!')
                 .setDescription('Something went wrong! But we\'ve tracked the issue and will get onto it soon.')
-                .setColor(0xFF0000);
+                .setColor(0xFF0000)
+                .setTimestamp();
             const reply = { embeds: [replyEmbed], ephemeral: true };
             try {
                 interaction.reply(reply);

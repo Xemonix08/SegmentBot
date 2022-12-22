@@ -12,7 +12,8 @@ module.exports = {
         const replyEmbed = new EmbedBuilder()
             .setDescription('Pong!')
             .setColor(color)
-            .addFields({ name: 'Latency', value: `${ping}ms`, inline: true });
+            .addFields({ name: 'Latency', value: `${ping}ms`, inline: true })
+            .setTimestamp();
         const reply = {
             embeds: [replyEmbed],
             ephemeral: true,

@@ -16,7 +16,7 @@ module.exports = {
         try {
             await command.execute(interaction);
         } catch (e) {
-            console.log(`❌ | An error occurred while executing a slash command ${interaction.commandName}`);
+            console.log(`An error occurred while executing a slash command </${interaction.commandName}:${interaction.commandId}>`, true);
             console.error(e);
 
             const replyEmbed = new EmbedBuilder()

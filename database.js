@@ -26,13 +26,4 @@ Item.belongsTo(Shop);
 Inventory.belongsTo(Item, { as: 'item' });
 Inventory.belongsTo(User, { as: 'user' });
 
-Reflect.defineProperty(User.prototype, 'getItems', {
-    value: () => {
-        return Inventory.findAll({
-            where: { userId: this.userId },
-            include: ['item']
-        });
-    }
-});
-
 module.exports = { ItemCategory, Item, Shop, User, Inventory };

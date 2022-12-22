@@ -1,8 +1,6 @@
 const { Events } = require('discord.js');
 const { guildId } = require('../../config.json');
 
-const recentlyChattedUsers = new Set();
-
 module.exports = {
     event: Events.MessageCreate,
     async execute(message) {
@@ -14,15 +12,16 @@ module.exports = {
         }
 
         const db = message.client.db;
+        const recentlyChatted = message.client.recentlyChattedUsers;
 
         const user = (await db.User.findOrCreate({ where: { userId: message.author.id } }))[0];
         const userId = user.userId;
-        if (!recentlyChattedUsers.has(userId)) {
+        if (!recentlyChatted.has(userId)) {
             console.log(`${message.author.tag} Earned 64KB PD`);
             db.User.increment('progressData', { by: 64, where: { userId: userId } });
-            recentlyChattedUsers.add(userId);
+            recentlyChatted.add(userId);
             setTimeout(() => {
-                recentlyChattedUsers.delete(userId);
+                recentlyChatted.delete(userId);
             }, 2000);
         }
     }

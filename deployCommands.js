@@ -12,10 +12,10 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: '10' }).setToken(token);
 
-if (process.argv.indexOf('--delete') !== -1 || process.argv.indexOf('-d') !== -1) {
-    const commandToDelete = process.argv[3];
-    if (commandToDelete !== undefined) {
-        rest.delete(Routes.applicationGuildCommand(clientId, guildId, commandToDelete))
+if (process.argv[2] === '--delete' || process.argv[2] === '-d') {
+    const commandIdToDelete = process.argv[3];
+    if (commandIdToDelete !== undefined) {
+        rest.delete(Routes.applicationGuildCommand(clientId, guildId, commandIdToDelete))
             .then(() => {
                 console.log('Successfully deleted a guild command');
             }).catch(console.error);

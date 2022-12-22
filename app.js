@@ -8,6 +8,7 @@ console.log('Starting the bot.');
 const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]
 });
+client.db = require('./database.js');
 
 loadEventFiles(client).then(() => {
     loadCommandFiles(client);

@@ -1,5 +1,4 @@
 const { WebhookClient, EmbedBuilder } = require('discord.js');
-const { User } = require('./database.js');
 const { logsWebhookUrl } = require('./config.json');
 
 String.prototype.truncate = String.prototype.truncate || function (n) {
@@ -30,11 +29,6 @@ function customWrite(data, prefix, webhookSettings) {
 }
 
 module.exports = {
-    async getUser(id) {
-        return await User.findOrCreate({
-            where: { userId: id }
-        });
-    },
     linearConversion(oldMin, oldMax, newMin, newMax, oldValue) {
         return (((oldValue - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin;
     },

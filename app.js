@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 const { loadEventFiles, loadCommandFiles } = require('./getFiles.js');
-require('./helpers.js');
+const { overrideConsoleMethods } = require('./helpers.js');
 
 console.log('Starting the bot.');
 
@@ -13,3 +13,5 @@ loadEventFiles(client);
 loadCommandFiles(client);
 
 client.login(token);
+
+overrideConsoleMethods();

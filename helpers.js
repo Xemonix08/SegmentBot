@@ -6,32 +6,28 @@ String.prototype.truncate = String.prototype.truncate || function (n) {
     return (this.length > n) ? this.slice(0, n - 3) + '...' : this.toString();
 };
 
-console.error = (data) => {
-    const name = data.name ?? '-';
-    const message = data.message ?? data;
-    const stack = data.stack ?? '-';
-
+function customWrite(data, prefix, webhookSettings) {
     try {
         if (logsWebhookUrl !== '') {
             const webhookClient = new WebhookClient({ url: logsWebhookUrl });
 
             const embed = new EmbedBuilder()
-                .setAuthor({ name: 'Error', iconURL: 'https://raw.githubusercontent.com/abrahammurciano/discord-lumberjack/main/images/error.png' })
-                .setDescription(name)
-                .addFields([
-                    { name: 'Message', value: message.truncate(1024), inline: true },
-                    { name: 'Stack', value: stack.truncate(1024), inline: true }
-                ])
-                .setColor(0xFF0000);
-            webhookClient.send({ embeds: [embed] });
+                .setAuthor({ name: webhookSettings.title, iconURL: webhookSettings.iconURL })
+                .setDescription(webhookSettings.description)
+                .addFields(webhookSettings.fields)
+                .setColor(webhookSettings.embedColor);
+            if (webhookSettings.content) {
+                webhookClient.send({ content: webhookSettings.content, embeds: [embed] });
+            } else {
+                webhookClient.send({ embeds: [embed] });
+            }
         }
     } catch (e) {
         process.stdout.write('❌ | Unable to redirect error to the webhook\n');
-        console.log(e);
+        process.stdout.write(`${e.name} : ${e.message}\n`);
     }
-    process.stdout.write(`[ERROR] ${name} : ${message}\n`);
-    process.stdout.write(stack);
-};
+    process.stdout.write(`${prefix}${data}\n`);
+}
 
 module.exports = {
     async getUser(id) {
@@ -41,5 +37,34 @@ module.exports = {
     },
     linearConversion(oldMin, oldMax, newMin, newMax, oldValue) {
         return (((oldValue - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin;
+    },
+    overrideConsoleMethods() {
+        console.log = (data) => {
+            customWrite(data, '', {
+                title: 'Info',
+                iconURL: 'https://raw.githubusercontent.com/abrahammurciano/discord-lumberjack/main/images/info.png',
+                description: data,
+                embedColor: 0x1012AA,
+                fields: []
+            });
+        };
+
+        console.error = (data) => {
+            const name = data.name ?? '-';
+            const message = data.message ?? data;
+            const stack = data.stack ?? '-';
+
+            customWrite(`${name} : ${message}\n${stack}\n`, '[ERROR] ', {
+                content: '<@&1055460954097319976> fix yo bot',
+                title: 'Error',
+                iconURL: 'https://raw.githubusercontent.com/abrahammurciano/discord-lumberjack/main/images/error.png',
+                description: name,
+                embedColor: 0xFF0000,
+                fields: [
+                    { name: 'Message', value: message.truncate(1024), inline: true },
+                    { name: 'Stack', value: stack.truncate(1024), inline: true },
+                ]
+            });
+        };
     }
 };

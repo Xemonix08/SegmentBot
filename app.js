@@ -9,9 +9,10 @@ const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]
 });
 
-loadEventFiles(client);
-loadCommandFiles(client);
+loadEventFiles(client).then(() => {
+    loadCommandFiles(client);
+}).then(() => {
+    overrideConsoleMethods();
+});
 
 client.login(token);
-
-overrideConsoleMethods();

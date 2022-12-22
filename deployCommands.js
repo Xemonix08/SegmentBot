@@ -12,18 +12,28 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: '10' }).setToken(token);
 
-console.log('Refreshing application commands...');
-(async () => {
-    try {
-        console.log(`Started refreshing ${commands.length} commands.`);
-
-        const data = await rest.put(
-            Routes.applicationGuildCommands(clientId, guildId),
-            { body: commands },
-        );
-
-        console.log(`✅ | Successfully refreshed ${data.length} commands!`);
-    } catch (e) {
-        console.log(`❌ | An error occurred while refreshing application commands! ${e.message}`);
+if (process.argv.indexOf('--delete') !== -1 || process.argv.indexOf('-d') !== -1) {
+    const commandToDelete = process.argv[3];
+    if (commandToDelete !== undefined) {
+        rest.delete(Routes.applicationGuildCommand(clientId, guildId, commandToDelete))
+            .then(() => {
+                console.log('Successfully deleted a guild command');
+            }).catch(console.error);
     }
-})();
+} else {
+    console.log('Refreshing application commands...');
+    (async () => {
+        try {
+            console.log(`Started refreshing ${commands.length} commands.`);
+
+            const data = await rest.put(
+                Routes.applicationGuildCommands(clientId, guildId),
+                { body: commands },
+            );
+
+            console.log(`✅ | Successfully refreshed ${data.length} commands!`);
+        } catch (e) {
+            console.log(`❌ | An error occurred while refreshing application commands! ${e.message}`);
+        }
+    })();
+}

@@ -60,5 +60,17 @@ module.exports = {
                 ]
             });
         };
+    },
+    formatPdAmount(amount) {
+        const emoji = '<:pd:1055485138898800760>';
+        if (amount < 1024) {
+            return `${amount} kB ${emoji}`;
+        } else if (amount < 1024 ** 2) {
+            return `${(amount / 1024).toFixed(2)} MB ${emoji}`;
+        } else if (amount < 1024 ** 3) {
+            return `${(amount / 1024 ** 2).toFixed(2)} GB ${emoji}`;
+        } else {
+            return `${(amount / 1024 ** 3).toFixed(2)} TB ${emoji}`;
+        }
     }
 };

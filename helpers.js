@@ -38,5 +38,8 @@ module.exports = {
         return await User.findOrCreate({
             where: { userId: id }
         });
+    },
+    linearConversion(oldMin, oldMax, newMin, newMax, oldValue) {
+        return (((oldValue - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin;
     }
 };

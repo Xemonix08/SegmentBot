@@ -1,4 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { linearConversion } = require('../helpers.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -6,9 +7,7 @@ module.exports = {
         .setDescription('Pong! Returns bot\'s latency.'),
     async execute(interaction) {
         const ping = interaction.client.ws.ping;
-        const oldColorRange = 300 - 1;
-        const newColorRange = 0xFF00 - 0x00FF;
-        const color = Math.floor((((ping - 1) * newColorRange) / oldColorRange) + 0x00FF) * 0x100;
+        const color = Math.floor(linearConversion(1, 300, 0xFF00, 0x00FF, ping)) * 0x100;
 
         const replyEmbed = new EmbedBuilder()
             .setDescription('Pong!')
